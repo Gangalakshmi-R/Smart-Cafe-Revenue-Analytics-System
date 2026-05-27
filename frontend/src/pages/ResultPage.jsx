@@ -22,24 +22,42 @@ function ResultPage() {
 
     const location = useLocation()
 
-    const revenue = location.state?.revenue || 0
+    const revenue = Number(
+
+        location.state?.revenue || 0
+    )
+
+    const targetRevenue = Number(
+
+        location.state?.targetRevenue || 0
+    )
 
 
     // KPI LOGIC
 
     const growth =
-        revenue > 50000
-        ? 'High Growth'
-        : revenue > 25000
-        ? 'Moderate Growth'
-        : 'Low Growth'
+        revenue >= targetRevenue
+        ? 'Target Achieved'
+
+        : revenue >= targetRevenue * 0.7
+        ? 'Near Target'
+
+        : 'Below Target'
+
 
     const customerStrength =
         revenue > 50000
         ? 'Excellent'
+
         : revenue > 25000
         ? 'Good'
+
         : 'Average'
+
+
+    const revenueDifference =
+
+        targetRevenue - revenue
 
 
     // BAR CHART DATA
@@ -47,13 +65,13 @@ function ResultPage() {
     const revenueData = [
 
         {
-            name:'Revenue',
+            name:'Predicted Revenue',
             value:revenue
         },
 
         {
-            name:'Target',
-            value:60000
+            name:'Target Revenue',
+            value:targetRevenue
         }
     ]
 
@@ -63,15 +81,19 @@ function ResultPage() {
     const pieData = [
 
         {
-            name:'Revenue',
+            name:'Achieved',
             value:revenue
         },
 
         {
             name:'Remaining',
-            value:70000 - revenue
+            value:
+            revenueDifference > 0
+            ? revenueDifference
+            : 0
         }
     ]
+
 
     const COLORS = [
 
@@ -95,8 +117,6 @@ function ResultPage() {
                 transition={{ duration:0.6 }}
             >
 
-                {/* TITLE */}
-
                 <h1 className='result-title'>
 
                     ☕ Revenue Analytics Dashboard
@@ -108,6 +128,7 @@ function ResultPage() {
 
                 <div className='kpi-grid'>
 
+
                     <div className='kpi-card'>
 
                         <h3>
@@ -118,7 +139,24 @@ function ResultPage() {
 
                         <p>
 
-                            ₹ {revenue}
+                            ₹ {Math.round(revenue)}
+
+                        </p>
+
+                    </div>
+
+
+                    <div className='kpi-card'>
+
+                        <h3>
+
+                            Target Revenue
+
+                        </h3>
+
+                        <p>
+
+                            ₹ {Math.round(targetRevenue)}
 
                         </p>
 
@@ -146,30 +184,13 @@ function ResultPage() {
 
                         <h3>
 
-                            Customer Strength
+                            Revenue Gap
 
                         </h3>
 
                         <p>
 
-                            {customerStrength}
-
-                        </p>
-
-                    </div>
-
-
-                    <div className='kpi-card'>
-
-                        <h3>
-
-                            AI Confidence
-
-                        </h3>
-
-                        <p>
-
-                            94%
+                            ₹ {Math.round(revenueDifference)}
 
                         </p>
 
@@ -207,8 +228,11 @@ function ResultPage() {
                                 <Tooltip />
 
                                 <Bar
+
                                     dataKey="value"
+
                                     fill="#D4A373"
+
                                     radius={[10,10,0,0]}
                                 />
 
@@ -225,7 +249,7 @@ function ResultPage() {
 
                         <h2>
 
-                            Revenue Target Analysis
+                            Target Achievement
 
                         </h2>
 
@@ -277,7 +301,52 @@ function ResultPage() {
                 </div>
 
 
-                {/* BUSINESS INSIGHTS */}
+                {/* PROGRESS */}
+
+                <div className='comparison-card'>
+
+                    <h2>
+
+                        ☕ Revenue Performance Analysis
+
+                    </h2>
+
+
+                    <div className='progress-bar'>
+
+                        <div
+
+                            className='progress-fill'
+
+                            style={{
+
+                                width:
+                                `${(revenue / targetRevenue) * 100}%`
+                            }}
+                        >
+
+                        </div>
+
+                    </div>
+
+
+                    <p className='progress-text'>
+
+                        {
+
+                            Math.round(
+
+                                (revenue / targetRevenue) * 100
+                            )
+
+                        }% of target achieved
+
+                    </p>
+
+                </div>
+
+
+                {/* INSIGHTS */}
 
                 <div className='insight-card'>
 
@@ -291,47 +360,26 @@ function ResultPage() {
 
                         <li>
 
-                            High customer traffic positively
-                            impacts revenue growth.
+                            Customer traffic significantly
+                            impacts predicted revenue.
 
                         </li>
 
                         <li>
 
-                            Marketing investment appears
-                            effective for business expansion.
+                            Revenue performance compared
+                            against business target.
 
                         </li>
 
                         <li>
 
-                            Revenue trend indicates strong
-                            café performance potential.
+                            Marketing and operational
+                            strategies appear effective.
 
                         </li>
 
                     </ul>
-
-                </div>
-
-
-                {/* QUOTES */}
-
-                <div className='quote-box'>
-
-                    <p>
-
-                        “Great coffee and smart analytics
-                        build successful cafés.”
-
-                    </p>
-
-                    <p>
-
-                        “Data-driven decisions create
-                        profitable businesses.”
-
-                    </p>
 
                 </div>
 
