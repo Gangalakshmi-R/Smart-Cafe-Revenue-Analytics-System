@@ -1,32 +1,10 @@
-import React from 'react'
+import Dashboard
+from "./pages/Dashboard"
 
-import {
+function App(){
 
-  BrowserRouter,
-  Routes,
-  Route
+ return <Dashboard/>
 
-} from 'react-router-dom'
-
-import InputPage from './pages/InputPage'
-import ResultPage from './pages/ResultPage'
-
-function App() {
-
-  return (
-
-    <BrowserRouter>
-
-      <Routes>
-
-        <Route path='/' element={<InputPage />} />
-
-        <Route path='/result' element={<ResultPage />} />
-
-      </Routes>
-
-    </BrowserRouter>
-  )
 }
 
 export default App
