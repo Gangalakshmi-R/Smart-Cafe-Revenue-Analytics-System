@@ -573,11 +573,9 @@ console.log(formData);
 
   </h2>
 
-  <pre>
-
-   {aiReport}
-
-  </pre>
+  <div style={{ whiteSpace: "pre-line" }}>
+    {aiReport}
+  </div>
 
  </div>
 }
