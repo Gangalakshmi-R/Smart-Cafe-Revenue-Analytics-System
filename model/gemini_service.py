@@ -24,32 +24,41 @@ def generate_business_report(
     risk,
     achievement
 ):
-
     prompt = f"""
-You are a senior coffee shop business consultant.
+You are a senior business intelligence consultant for coffee shops.
 
-Coffee Shop Metrics:
+Business Metrics:
 
-Predicted Daily Revenue: ₹{prediction}
-Target Daily Revenue: ₹{target}
+Predicted Revenue: ₹{prediction}
+Target Revenue: ₹{target}
 Achievement: {achievement}%
 Risk Level: {risk}
 
-Provide:
+Generate a professional business report.
 
-1. Executive Summary
-2. Coffee Shop Performance Analysis
-3. Customer Traffic Analysis
-4. Three Actionable Recommendations
+Requirements:
+- Do NOT use markdown.
+- Do NOT use ** symbols.
+- Do NOT use bullet symbols such as *, -, or #.
+- Use plain text only.
+- Keep the report concise and professional.
+- Maximum 150 words.
 
-Focus on:
-- Customer traffic
-- Average order value
-- Marketing effectiveness
-- Staffing optimization
-- Operating hours
+Format exactly as:
 
-Keep response under 150 words.
+Executive Summary:
+Write 2-3 sentences summarizing the business performance.
+
+Performance Analysis:
+Analyze revenue achievement, risk level, and operational performance.
+
+Recommendations:
+1. Recommendation one
+2. Recommendation two
+3. Recommendation three
+
+Conclusion:
+Provide a short concluding statement.
 """
 
     response = model.generate_content(
