@@ -11,6 +11,10 @@ import ForecastChart from "../components/ForecastChart";
 
 import FeatureImportance from "../components/FeatureImportance";
 
+import HistoricalTable from "../components/HistoricalTable";
+
+import generatePDF from "../utils/generatePDF";
+
 function Dashboard() {
 
   const [formData, setFormData] = useState({
@@ -31,7 +35,11 @@ function Dashboard() {
 
   });
 
+  const [ historicalData, setHistoricalData] = useState([]);
+
   const [result, setResult] = useState(null);
+
+  const [aiReport,setAiReport] = useState("");
 
   const [importance, setImportance] = useState([]);
 
@@ -46,6 +54,47 @@ function Dashboard() {
     });
 
   };
+
+ const handleAIReport = async () => {
+
+  try {
+
+    console.log("Button clicked");
+
+    const response = await axios.post(
+
+      "http://127.0.0.1:5000/generate-report",
+
+      {
+
+        prediction: result.prediction,
+
+        target: result.target,
+
+        risk: result.risk,
+
+        achievement: result.achievement
+
+      }
+
+    );
+
+    console.log(response.data);
+    console.log(result);
+
+    setAiReport(
+      response.data.report
+    );
+
+  }
+
+  catch(err){
+
+    console.log(err);
+
+  }
+
+};
 
   useEffect(() => {
 
@@ -81,7 +130,7 @@ function Dashboard() {
           formData
 
         );
-
+console.log(formData);
       setResult(response.data);
 
     }
@@ -91,6 +140,30 @@ function Dashboard() {
       console.log(err);
 
     }
+
+    axios
+
+.get(
+
+ "http://127.0.0.1:5000/historical-data"
+
+)
+
+.then((res)=>{
+
+ setHistoricalData(
+
+  res.data
+
+ );
+
+})
+
+.catch((err)=>{
+
+ console.log(err);
+
+});
 
   };
 
@@ -459,11 +532,63 @@ function Dashboard() {
 
             </div>
 
+{/* LIVE BUSINESS RECORDS */}
+
+            <HistoricalTable
+
+ data={historicalData}
+
+/>
+<button
+
+ className="pdf-btn"
+
+ onClick={()=>
+
+  generatePDF(result)
+
+ }
+
+>
+
+ 📄 Download Business Report
+
+</button>
+
+<button
+ className="pdf-btn"
+ onClick={handleAIReport}
+>
+ 🤖 Generate AI Report
+</button>
+
+{
+ aiReport &&
+
+ <div className="insight-card">
+
+  <h2>
+
+   Gemini AI Business Analysis
+
+  </h2>
+
+  <pre>
+
+   {aiReport}
+
+  </pre>
+
+ </div>
+}
+
+
           </>
 
         )}
 
       </div>
+      
 
     </div>
 

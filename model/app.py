@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 import joblib
 
+from gemini_service import generate_business_report
+
 app = Flask(__name__)
 CORS(app)
 
@@ -318,8 +320,51 @@ def analytics():
         return jsonify({
             "error": str(e)
         })
+    
 
+# =====================================
+# Gemini Business Report
+# =====================================
+@app.route(
+    "/generate-report",
+    methods=["POST"]
+)
+def generate_report():
 
+    try:
+
+        data = request.json
+
+        print("DATA RECEIVED:")
+        print(data)
+
+        report = generate_business_report(
+
+            data["prediction"],
+
+            data["target"],
+
+            data["risk"],
+
+            data["achievement"]
+
+        )
+
+        return jsonify({
+
+            "report": report
+
+        })
+
+    except Exception as e:
+
+        print(e)
+
+        return jsonify({
+
+            "error": str(e)
+
+        })
 # =====================================
 # RUN
 # =====================================

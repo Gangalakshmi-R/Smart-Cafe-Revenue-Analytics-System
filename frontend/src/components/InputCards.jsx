@@ -20,20 +20,26 @@ function InputCards({
 
     const [value, setValue] = useState('')
 
-    const handleSave = () => {
+   const handleSave = () => {
 
-        handleChange({
+    console.log(
+      name,
+      value
+    );
 
-            target:{
+    handleChange({
 
-                name:name,
+        target:{
 
-                value:value
-            }
-        })
+            name:name,
 
-        setOpen(false)
-    }
+            value:value
+        }
+
+    });
+
+    setOpen(false);
+}
 
     return (
 
