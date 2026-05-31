@@ -46,25 +46,6 @@ feature_names = [
     "Foot Traffic"
 ]
 
-
-
-
-
-
-
-import os
-
-@app.route("/check-key")
-def check_key():
-
-    key = os.getenv("GEMINI_API_KEY")
-
-    return {
-        "exists": key is not None,
-        "length": len(key) if key else 0,
-        "first5": key[:5] if key else None
-    }
-
 # =====================================
 # HOME
 # =====================================
