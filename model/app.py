@@ -7,7 +7,12 @@ import joblib
 
 from gemini_service import generate_business_report
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="static",
+    static_url_path=""
+)
+
 CORS(app)
 
 # =====================================
@@ -48,10 +53,9 @@ feature_names = [
 @app.route("/")
 def home():
 
-    return jsonify({
-        "message": "Smart Cafe Revenue Intelligence API Running"
-    })
-
+    return app.send_static_file(
+        "index.html"
+    )
 
 # =====================================
 # GET HISTORICAL DATA
@@ -365,14 +369,45 @@ def generate_report():
             "error": str(e)
 
         })
+#========================
+#React support
+#====================
+from flask import Flask, request, jsonify, send_from_directory
+
+
+@app.route('/<path:path>')
+def serve_react(path):
+
+    static_path = os.path.join(
+        app.static_folder,
+        path
+    )
+
+    if os.path.exists(static_path):
+
+        return send_from_directory(
+            app.static_folder,
+            path
+        )
+
+    return app.send_static_file(
+        "index.html"
+    )
 # =====================================
 # RUN
 # =====================================
+import os
 
 if __name__ == "__main__":
 
+    port = int(
+        os.environ.get(
+            "PORT",
+            5000
+        )
+    )
+
     app.run(
-        debug=True,
         host="0.0.0.0",
-        port=5000
+        port=port
     )

@@ -63,7 +63,7 @@ function Dashboard() {
 
     const response = await axios.post(
 
-      "http://127.0.0.1:5000/generate-report",
+      "/generate-report",
 
       {
 
@@ -101,7 +101,7 @@ function Dashboard() {
     axios
 
       .get(
-        "http://127.0.0.1:5000/feature-importance"
+        "/feature-importance"
       )
 
       .then((res) => {
@@ -125,7 +125,7 @@ function Dashboard() {
       const response =
         await axios.post(
 
-          "http://127.0.0.1:5000/predict",
+          "/predict",
 
           formData
 
@@ -145,7 +145,7 @@ console.log(formData);
 
 .get(
 
- "http://127.0.0.1:5000/historical-data"
+ "/historical-data"
 
 )
 
