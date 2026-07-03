@@ -6,7 +6,10 @@
 **🔗 [Try it live →](https://smart-cafe-revenue-analytics-system.onrender.com)**
 
 ---
-
+![alt text](<Screenshot 2026-07-03 123400.png>)
+![alt text](<Screenshot 2026-07-03 123510.png>)
+![alt text](<Screenshot 2026-07-03 123600.png>)
+![alt text](<Screenshot 2026-07-03 123545.png>)
 
 ## 🎯 The Problem
 
